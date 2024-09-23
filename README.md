@@ -26,8 +26,8 @@
 
 Verkefnið felur í sér að sameina tíðnigögn úr tveimur CSV skrám,
 
-- [first_names_freq.csv](first_names_freq.csv)
-- [middle_names_freq.csv](middle_names_freq.csv)
+- [first_names_freq.csv](data/first_names_freq.csv)
+- [middle_names_freq.csv](data/middle_names_freq.csv)
 
 í SQLite gagnagrunn [names_freq.db](data/names_freq.db).
 Nemendur munu búa til eina töflu í gagnagrunninum til að geyma og vinna úr þessum gögnum.
@@ -61,9 +61,9 @@ sem tröllreið íslenskt samfélag á 9. áratug 20. aldar.
 2. Skilið skipanaskrá `isfolkid.sql` sem svarar eftirfarandi spurningum:
     - Hversu margar aðalpersónur eru í bókabálkinum?
     - Hversu margar persónur eru í hverri bók?
-    - Hvaða persóna kemur oftast fyrir?
+    - Hversu oft kemur Þengill fyrir í bókunum?
     - Hvað eru margir af Paladín ættinni?
-    - Hversu algengur er illi arfurinn?
+    - Hversu algengur er illi arfurinn af þeim sem eru útvalin?
     - Hver er fæðingartíðni kvenna í bókabálkinum?
     - Hvað er Ísfólkið margar blaðsíður samanlagt?
     - Hvað er meðallengd hvers þáttar af _Ískisum_?
