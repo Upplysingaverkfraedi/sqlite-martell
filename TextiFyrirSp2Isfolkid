@@ -1,0 +1,48 @@
+
+Þetta er gert í Therminal í Visual Studio Code.
+
+C:\Users\halld\Downloads\Háskóli_Íslands\sqlite3 data\isfolkid.db
+(Frá C til sqlite3 er staðsetning forritið sem er notað til að decode-a skjalið isfolkid.db sem er upplýsingasafn sem inniheldur bókinna “söga ísfólksins”.)
+.output create_isfolkid.sql
+(Output er notað til að “copy paste” efni úr skjali ístaðin fyrir að skrifa efnið upp á tölvuskjánum.)
+.schema
+(Sýnir upplýsingar um allar töflur, vísitölur og meira en inniheldur ekki gögnin sjálf, þetta sýnir beinagrind uppbygginarinnar á gögnunum.)
+.exit
+(fer út úr data\isfolkid.db og aftur inn í „files” þarf sem github upplýsingarnar eru staðsetar)
+
+Þetta er skrfað í SQL kóða skjali.
+
+.tables 
+(Birtir lista af gagnagrunnir sem er í notkun sem fljótt yfirlit á töflunum en sýnir ekki gögnin sjálf.)
+.headers on 
+(notað til að skipta um birtingu dálkahausa í fyrirspurnarniðurstöðum (therminal), (gerir lítið til ekkert).)
+
+select count(*) as adalpersonur from books;
+(telur hversu mörg id er í bókinni og skýrir töluna adalpersonur.)
+
+select count(id) as persónur from books;
+(telur  hversu margar persónur eru í )
+
+select count(*) as Þrengill from books where characters like '%Þengill%';
+(telur hversu of orðir Þengill kemur fram í bókinni)
+
+select count(*) as Paladin from books where characters like '%Paladín%';
+(telur hversu of orðir Paladin kemur fram í bókinni)
+
+select count(*) as illi from family where chosen_one like '%evil%';
+(telur hversu margir í bókinni eru skráðir sem “evil”.
+
+select AVG(birth) as fædingartidni from family where gender like '%F%';
+(Meðal ár sem stelpur fæðast í bókinni)
+
+select MAX(pages) as fjoldiBls from books;
+(Fer í gegnum allar línur og kíkir hvaða hæsta blaðsýðan er, með því finnur kóðin hversu margar blaðsýður eru í bókinni.)
+
+select AVG(length) as medaltal from storytel_iskisur;
+(meðal lengd þáttar hverns þátt í storytel_iskisur)
+
+
+
+
+
+Svo er notað .read isfolkid.db í Therminal til að lesa SQL kóðan.
