@@ -29,7 +29,7 @@ CREATE TABLE timataka (
     "Year" INTEGER,
     Club TEXT,
     Split TEXT,
-    "Time" TIME
+    "Time" TIME,
     Chiptime TIME,
     Behind TEXT,
     FOREIGN KEY (hlaup_id) REFERENCES hlaup(id)

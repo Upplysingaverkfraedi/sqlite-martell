@@ -368,7 +368,7 @@ def main():
 Keyrslan á forrituna virkar einungis fyrir eitt URL og getur verið keyrt á eftirfarandi hátt: 
 
 ```bash
-python3 code/timataka.py --url "https://timataka.net/snaefellsjokulshlaupid2014/urslit/?race=1&cat=overall" --output_dir data --debug
+python3 timataka.py --url "https://timataka.net/tt2021_4/urslit/?race=1&cat=overall" --output_dir data --debug
 ```
 - Þetta mun sækja gögnin frá gefnu urli og vista þau í `data/hlaup.csv` og `data/hlaup_info.csv`.
 - Ef `--debug` er notað, verður HTML-skjalið vistað í `data/debug.html`.
