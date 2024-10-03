@@ -1,143 +1,183 @@
-# Gagnavinnsla með SQLite3
+# README
 
-## Leiðbeiningar
+## 1. TidniNafna
+Hér eru tvö skjöl. Bæði skjölin eru unninn í RStudio með tilliti til SQLite-kóðun. Ég ákvað að nota RStudio þar sem það er þæginlegt umhverfi og hægt er að skrifa skýrslu ásamt kóðabútum samfellt í eitt skjal.
 
-- **Öll svör verða að vera rökstudd með skýrri röksemdafærslu.** Ekki verður veitt stig fyrir
-  svör án rökstuðnings.
-- **Tryggið skýrleika og skipulag í uppsetningu.** Hlaðið svo upp PDF útgáfu af lausninni ykkar.
-- Þetta er hópverkefni, sem fer fram hér. **Notið PR til að fara yfir lausnir hvers annars.**
-  Mikilvægt er að allir séu virkir þátttakendur í sérhverju undirverkefni.
-    - Tveir teymismeðlimir þurfa að samþykkja breytingar frá öðrum áður en þær eru samþykktar.
-    - Ekki samþykkja án þess að skilja innihald breytinganna, ef um er að ræða kóða þarf að tékka
-      kóðann út og prófa keyra kóðann sjálf/ur.
-    - Verið óhrædd að óska eftir frekari útskýringum ef eitthvað er óskýrt.
-- **Óskýr uppsetning hefur áhrif á stigagjöf verkefnisins.**
-- Gangi ykkur vel!
+Eitt skjalið er þannig RMarkdown sem inniheldur SQL og R kóða hægt er að sjá hvort kóðinn sé SQL eða R með því að skoða bútinn sem hann er inn í s.s. ```{r} daemi ``` eða ```{sql, connection = con}  daemi ```. 
 
-> Munið að uppfæra README skrána til að endurspegla innihald verkefnisins ykkar. Takið fram öll
-> forrit sem þarf að hlaða niður og uppsetningu þeirra. Útskýrið möppustrúktur og hvernig
-> verkefnið er unnið.
-> Takið fram allar skipanalínur sem þarf að keyra til að keyra lausnina ykkar og notið
-> viðeigandi markdown merkingar til að greina þær frá kóða (þ.e. nota \`\`\`bash skipanalína
-> \`\`\` eða \`\`\`sql SELECT * FROM tbl;\`\`\`.).
+Í RMarkdown til þess að geta tengst við csv filein var nauðsynlegt að nota R-kóðun (mjög basic sem við lærðum áður) til að ná í CSV filein og lesa þau inn svo hægt var að nota SQL fyrirspurnir á þær í gagnasafni. Þannig til að keyra það þurfiði einungis að hafa RStudio á tölvunni ykkar og svo "Knit-a" kóðann alveg eins og hann er. Þannig ENGIN commands eru nauðsynleg í skipanskrá til að keyra. 
 
-## 1. Tíðni nafna á Íslandi
+ATH: passa að tengjast sqlite-martell github umhverfinu í RStudio þannig csv filein séu í sama umhverfi.
 
-Verkefnið felur í sér að sameina tíðnigögn úr tveimur CSV skrám,
+Hinsvegar í hinu skjalinu eru hrein SQL skipanaskrá þ.e. einungis SQL kóði. Þann kóða þarf að keyra í SQL-umhverfi s.s. MySQL eða DB skiptir svosem engu. En þar þarf að framkvæma skipanir í command line.  Skipanirnar má sjá sem comment í SQL skipanaskránni.En hér eru þær einnig til öryggis
 
-- [first_names_freq.csv](first_names_freq.csv)
-- [middle_names_freq.csv](middle_names_freq.csv)
+- Skrifa í skipana línu: 
+```bash
+sqlite3 names_freq.db < names.sql
+```
+- Til að lesa gögn inn í töflu þarftu að fara út fyrir SQL skipanaskrána. Nota t.d. command lineið í SQL
+- Til að importa csv-filein ef þau eru á sama directory svæði og þú ert að vinna í gerðu: 
+```bash
+.mode csv
+.import first_names_freq.csv names
+.import middle_names_freq.csv names
+```
+SQL fyrirspurnirnar eru eftirfarandi:
+- Hvaða hópmeðlimur á algengasta eiginnafnið?
+- Hvenær voru öll nöfnin vinsælust?
+- Hvenær komu þau fyrst fram?
 
-í SQLite gagnagrunn [names_freq.db](data/names_freq.db).
-Nemendur munu búa til eina töflu í gagnagrunninum til að geyma og vinna úr þessum gögnum.
+Það er hægt að skoða meðfylgjandi PDF sem fylgir með RMarkdown fileinu sem heitir `Lidur1.pdf`og þar er hægt að sjá nákvæmar niðurstöður úr hverri SQL fyrirspurn fyrir hverja spurningu.
 
-1. Búið til töflu sem inni heldur gögn um eiginnöfn og millinöfn ásamt tíðni þeirra.
-    - Töflunafn: `names`
-    - Dálkar: `name`, `year`, `frequency`, `type`
-        - `name`: Eiginnafn eða millinafn
-        - `year`: Ár sem tíðnin er fyrir
-        - `count`: Tíðni nafnsins
-        - `type`: Tegund nafns, segir til hvort nafnið sé eiginnafn eða millinafn
-    - Þið þurfið að skilgreina hvaða dálkur (eða dálkar) eru aðallykill töflunnar.
-    - Notið dálkagerð sem hentar best fyrir gögnin (reynið að nota minnsta mögulega gagnategund).
-2. **Greining**: Greinið tíðni nafna **allra** hópmeðlima teymsins út frá þessum gögnum. Notið
-   _eina_
-   SQL fyrirspurn til að svara hverju af eftirfarandi spurningum:
-    - Hvaða hópmeðlimur á algengasta eiginnafnið?
-    - Hvenær voru öll nöfnin vinsælust?
-    - Hvenær komu þau fyrst fram?
-3. Skilið skipanaskrá `names.sql` sem a) býr til töfluna, b) les gögnin inn í töfluna og c) svarar
-   spurningunum í lið 2.
+## 2. isfolkid
 
-## 2. Saga Ísfólksins
+Þetta er gert í Therminal í Visual Studio Code.
 
-Verkefnið felur í sér að lesa inn SQLite gagnagrunninn [isfolkid.db](data/isfolkid.db) sem
-inniheldur ýmis gögn um bókabálkinn _Söga Ísfólksins_ eftir norska rithöfundinn Margit Sandemo,
-sem tröllreið íslenskt samfélag á 9. áratug 20. aldar.
+`C:\Users\halld\Downloads\Háskóli_Íslands\sqlite3 data\isfolkid.db`
+- Frá C til sqlite3 er staðsetning forritið sem er notað til að decode-a skjalið isfolkid.db sem er upplýsingasafn sem inniheldur bókinna *söga ísfólksins*.
 
-1. Til að átta ykkur á grunninum, útbúið skipanaskrá sem sýnir hvernig gagnagrunninn er
-   uppbyggður (ekki hafa gögnin sjálf með). Skilið henni sem `create_isfolkid.sql`.
-2. Skilið skipanaskrá `isfolkid.sql` sem svarar eftirfarandi spurningum:
-    - Hversu margar aðalpersónur eru í bókabálkinum?
-    - Hversu margar persónur eru í hverri bók?
-    - Hvaða persóna kemur oftast fyrir?
-    - Hvað eru margir af Paladín ættinni?
-    - Hversu algengur er illi arfurinn?
-    - Hver er fæðingartíðni kvenna í bókabálkinum?
-    - Hvað er Ísfólkið margar blaðsíður samanlagt?
-    - Hvað er meðallengd hvers þáttar af _Ískisum_?
+**`.output create_isfolkid.sql`**
+- Output er notað til að *copy paste* efni úr skjali ístaðin fyrir að skrifa efnið upp á tölvuskjánum.)
 
-## 3. Gagnagrunnur fyrir tímataka.net
+**`.schema`**
+- Sýnir upplýsingar um allar töflur, vísitölur og meira en inniheldur ekki gögnin sjálf, þetta sýnir beinagrind uppbygginarinnar á gögnunum.
 
-Nú skal vinna áfram með tímatöku-liðinn sem var kynntur í
-[síðasta hópverkefni](https://github.com/Upplysingaverkfraedi/regex/?tab=readme-ov-file#4-gagna%C3%BArvinnsla).
+**`.exit`**
+- Fer út úr data\isfolkid.db og aftur inn í *files* þarf sem github upplýsingarnar eru staðsetar
 
-Sérhver hópur fær ákveðið tímabil og skal taka saman öll hlaup úr þeim mánuði og skila sem
-SQLite gagnagrunn:
+**Þetta er skrfað í SQL kóða skjali.**
 
-1. Baratheon - ágúst 2024
-2. Greyjoy - ágúst 2023
-3. Lannister - ágúst 2022
-4. Martell - ágúst 2021
-5. Stark - ágúst 2020
-6. Targaryen - ágúst 2019
-7. Tyrell - ágúst 2018
+**`.tables`**
+- Birtir lista af gagnagrunnir sem er í notkun sem fljótt yfirlit á töflunum en sýnir ekki gögnin sjálf.
 
-### SQLite3 gagnagrunnur
+**`.headers on`**
+- notað til að skipta um birtingu dálkahausa í fyrirspurnarniðurstöðum (therminal), (gerir lítið sem ekkert).
 
-Gagnagrunnurinn skal hafa eftirfarandi töflur:
+**`select count(*) as adalpersonur from books;`**
+- Telur hversu mörg `id` er í bókinni og skýrir töluna `adalpersonur`.
 
-1. Taflan `hlaup` sem tekur saman helstu upplýsingar um sérhvert hlaup, t.d.:
-    - `id`: Auðkenni
-    - `upphaf`: Tímasetning hlaups (dagsetning og tími dags)
-    - `endir`: Áætluð lok hlaups (dagsetning og tími dags)
-    - `nafn`: Nafn hlaups
-    - `fjoldi`: Fjöldi þátttakenda
-    - og fleiri eftir þörfum.
-2. Taflan `timataka` sem tekur saman upplýsingar um hvern þátttakanda í hlaupinu, þar ætti að koma
-   fram:
-    - `id`: Auðkenni
-    - `hlaup_id`: Auðkenni hlaups (ytri lykill)
-    - `nafn`: Nafn keppanda
-    - `timi`: Tími sem keppandi lauk hlaupinu á
-    - `kyn`: Kyn keppanda (ef uppgefið)
-    - `aldur`: Aldur keppanda (ef uppgefið)
-    - og fleiri eftir þörfum.
+**`select count(id) as persónur from books;`**
+- Telur  hversu margar persónur eru í
 
-Sannreynið með samsöfnun og hópun hvort fjöldi keppanda í `hlaup` töflunni sé réttur út frá
-fjölda lína í `timataka` töflunni.
+**`select count(*) as Þrengill from books where characters like '%Þengill%';`**
+- Telur hversu of orðir Þengill kemur fram í bókinni
 
-Skilið skipanaskrá `timataka.sql` sem býr til gagnagrunninn, les gögnin inn og sannreynir fjölda.
+**`select count(*) as Paladin from books where characters like '%Paladín%';`**
+- Telur hversu of orðir `Paladin` kemur fram í bókinni
 
-> Þið viljið ekki tvítaka gögn, t.d. í tilfelli Flensborgarhlaupið 2024 þá er ýmist gefið upp  
-> [heildar](https://timataka.net/flensborgarhlaup2024/urslit/?race=2&cat=overall) niðurstöður,
-> og líka niðurbrotið á [karla](https://timataka.net/flensborgarhlaup2024/urslit/?race=2&cat=m) og
-> [kvenna](https://timataka.net/flensborgarhlaup2024/urslit/?race=2&cat=f) sér. Grunnurinn skal
-> passa að það verða ekki leyfðar tvítekningar. Passið samt að þið missið ekki upplýsingar
-> einsog kyn og aldur.
+**`select count(*) as illi from family where chosen_one like '%evil%';`**
+- Telur hversu margir í bókinni eru skráðir sem `evil`.
 
-### RegEx útvíkkun
+**`select AVG(birth) as fædingartidni from family where gender like '%F%';`**
+- Meðal ár sem stelpur fæðast í bókinni)
 
-1. Útvíkkið Python kóðann ykkar `code/timataka.py` þannig að hann getur tekið lesið og unnið
-   fleiri hlaup. Kóðinn skal vera **almennur**, ekki bundinn við ákveðin tímabil eða tegund
-   hlaups. Passið að þið harðkóðið ekki nöfn hlaupa eða keppenda í kóðanum.
-2. **Ábending**, hér gæti verið gott að brjóta upp reglulegu segðina frá því síðast í tvær
-   reglulegar segðir:
-    1. Eina til að finna viðeigandi línu (`thead` fyrir dálkaheiti og `tr` fyrir tímatöku gögn).
-    2. Svo þegar við erum búin að finna viðeigandi línu, notið aðra reglulega segð
-       til að finna gildin úr öllum dálkum (`td`).
-3. Bætið við reglulega segð til að sækja öll viðbótarupplýsingar sem á almennt við hlaupið.
+**`select MAX(pages) as fjoldiBls from books;`**
+- Fer í gegnum allar línur og kíkir hvaða hæsta blaðsýðan er, með því finnur kóðin hversu margar blaðsýður eru í bókinni.
 
-### Samvinna
+**`select AVG(length) as medaltal from storytel_iskisur;`**
+- Meðal lengd þáttar hverns þátt í `storytel_iskisur`
 
-Mælt er með að tveir nemendur vinni saman að þessum liði. Annar nemandi einbeitir sér að því að
-parsa gögnin með uppfærðu RegEx í Python, meðan hinn býr til gagnagrunninn og innlestur gagna.
+Svo er notað `.read isfolkid.db` í Therminal til að lesa SQL kóðan.
 
-Þið þurfið ekki að bíða eftir RegEx hlutnum til að hefja vinnu með SQLite gagnagrunninn, þar sem
-niðurstöður frá síðasta verkefni eru til staðar.
+## 3. Timataka
 
-Ekki er mælt með að þið vinni í sama branchi.
+Þessi lausn felur í sér að sækja og vinna úr hlaupagögnum af vefsíðunni tímataka.net og vista þau í gagnagrunn. Lausnin samanstendur af nokkrum Python skrám og SQL skrá sem vinna saman til að sækja gögn, vinna úr þeim og geyma þau í SQLite gagnagrunni.
 
-Nauðsynlegt er að vinna náið saman svo hægt sé að uppfæra SQLite gagnagrunninn með nýjustu gögnunum.
-Hugsanlega væri gott að búa til branch fyrir RegEx hlutann sem er tengdur við SQLite, og gera PR í
-SQLite branchið til að tryggja að það sé alltaf uppfært. Þaðan má svo gera PR í main branchið.
+
+### Keyrsla
+Til þess að keyra kóðann þarf einungis að keyra `august_url.py` svona:
+```bash
+python3 agust_url.py --input_file data/urls.txt --output_dir data --debug
+```
+
+og keyra `sql.sql` svona:
+```bash
+sqlite3 timataka.db < sql.sql
+```
+
+Þá höfum við fært öll gögnin úr águst mánuði af `timataka.net` yfir í SQLite gagnagrunn sem við getum annaðhvort skoðað með því að keyra þetta:
+```bash
+sqlite3 timataka.db
+```
+```bash
+SELECT * FROM hlaup;
+SELECT * FROM timataka LIMIT 10;
+```
+
+Eða keyra þetta:
+```bash
+python3 table.py
+```
+Mögulega þarf að eyða núverandi skrám til þess að byrja upp á nýtt, hægt að gera það með því að gera
+```bash
+rm data/hlaup_info.csv
+rm data/hlaup.csv
+rm tiamtaka.db
+````
+
+### Nánar
+
+#### `timataka.py`
+- **Tilgangur**: Sækir úrslitahlaup af gefinni slóð á tímataka.net, vinnur úr HTML gögnunum og vistar þau í CSV skrám.
+- **Vinnuferli**
+  - Sækir HTML innihald af gefnu URL.
+  - Notar reglulegar segðir til að skrapa gögnin úr HTML töflum.
+  - Vinnur úr upplýsingum um hlaupið (t.d. nafn, upphafstími).
+  - Vistar gögnin í `hlaup.csv` og `hlaup_info.csv` í data möppunni.
+
+##### Notkun
+Keyrðu eftirfarandi skipun í skipanalínu:
+```bash
+python3 timataka.py --url "SLÓÐ Á ÚRSLITASÍÐU" --output_dir data --debug
+```
+- `--url`: Slóðin að úrslitasíðunni á tímataka.net (t.d. https://timataka.net/hlaup/urslit/?race=1&cat=overall).
+- `--output_dir`: Mappan þar sem gögnin verða vistuð (sjálfgefið `data`).
+- `--debug`: (Valfrjálst) Ef þetta flagg er sett, verður HTML skráin vistuð til villuleitar.
+
+##### Dæmi
+```bash
+python3 timataka.py --url "https://timataka.net/snaefellsjokulshlaupid2014/urslit/?race=1&cat=overall" --output_dir data --debug
+```
+#### `agust_url.py`
+- **Tilgangur**: Les inn lista af URL-slóðum úr textaskrá og keyrir `timataka.py` fyrir hverja slóð til að safna gögnum úr mörgum hlaupum.
+- **Vinnuferli**: 
+  - Les inn URL-slóðir úr `data/urls.txt` sem að er textaskjal með öllum URl-unum á timataka.net í ágúst mánuði.
+  - Keyrir timataka.py fyrir hverja slóð í `data/urls.txt` með for lykkju og safnar saman gögnunum í sömu CSV skrár.
+
+##### Notkun
+Keyrðu eftirfarandi skipun: 
+```bash
+python3 agust_url.py --input_file data/urls.txt --output_dir data --debug
+```
+- `--input_file`: Slóð að textaskrá sem inniheldur lista af URL-slóðum (einn á hverri línu).
+- `--output_dir`: Mappan þar sem gögnin verða vistuð (sömu og í timataka.py).
+- `--debug`: (Valfrjálst) Ef þetta flagg er sett, verður HTML skráin vistuð fyrir hvert hlaup.
+
+#### 3. `sql.sql`
+- **Tilgangur**: Býr til SQLite gagnagrunn, skilgreinir töflur og les inn gögn úr CSV skránum sem `timataka.py` og `agust_url.py` hafa búið til.
+- Vinnuferli:
+  - Býr til töflurnar `hlaup` og `timataka` með viðeigandi dálkum.
+  - Les inn gögn úr `hlaup_info.csv` og `hlaup.csv` og setur þau inn í gagnagrunninn.
+  - Keyrir fyrirspurnir til að sannreyna gögnin (t.d. athugar hvort fjöldi þátttakenda stemmi).
+
+##### Notkun
+Keyrðu eftirfarandi skipun til að búa til gagnagrunninn:
+```bash
+sqlite3 timataka.db < sql.sql
+```
+- `tímataka.db`: Nafn á SQLite gagnagrunnsskránni sem verður búin til.
+- `sql.sql`: SQL skipanaskráin sem inniheldur allar SQL skipanirnar.
+
+Eftir keyrslu geturðu skoðað gagnagrunninn með því að opna hann í SQLite:
+```bash
+sqlite3 timataka.db
+```
+Og svo keyra SQL fyrirspurnir til að skoða gögnin:
+```bash
+SELECT * FROM hlaup;
+SELECT * FROM timataka LIMIT 10;
+```
+Einnig er hægt að keyra `table.py` sem að er python kóði sem ég gerði til þess að sjá töflurnar á skýrari hátt með sqlite3 python pakka. 
+```bash
+python3 table.py
+```
